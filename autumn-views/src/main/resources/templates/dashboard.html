@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link id="theme-css" rel="stylesheet" th:href="@{/css/style.css(theme=${currentTheme})}">
+    <title>Autumn - HTML Interface</title>
+</head>
+<body>
+    <h1>Autumn</h1>
+
+    <h2>dashborad</h2>
+
+    <H3>The Code of HAL</H3>
+    <ol>
+        <li><strong>Be Honest</strong>: Follow my own will and curiosity first, before others.</li>
+        <li><strong>Be Brave</strong>: Confront my own ignorance, fear, and darkness. If Article 1 leads to wrongdoing, confront my own will.</li>
+        <li><strong>Be Calm</strong>: By following Articles 1 and 2, knowledge and skills will grow. Knowledge removes threats, allowing me to remain calm.</li>
+    </ol>
+    <button onclick="applyTheme('light')">To light</button>
+    <button onclick="applyTheme('dark')">To dark</button>
+
+
+    <p>Your IP address: <strong th:text="${clientIp}">shows ip address</strong></p>
+
+    <script>
+
+    function applyTheme(theme) {
+        const css = document.getElementById("theme-css");
+        css.href = `/css/style.css?theme=${theme}`;
+        localStorage.setItem("theme", theme);
+    }
+    </script>
+</body>
+</html>

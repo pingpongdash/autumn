@@ -1,0 +1,6 @@
+auth:
+  users:
+    - username: HAL
+      password: "9000"
+    - username: DAVE
+      password: "2001"

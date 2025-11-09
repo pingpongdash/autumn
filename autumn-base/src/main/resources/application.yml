@@ -1,0 +1,29 @@
+spring:
+  component:
+    scan:
+      base:
+        packages: jp.kernelpanic.autumn,jp.kernelpanic.auth.core
+  autoconfigure:
+    exclude: org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration
+
+
+jwt:
+  secret:
+    resource: classpath:jwt/image-21.png
+
+security:
+  permit-all-paths:
+    - /
+    - /index
+    - /index.html
+    - /css/**
+    - /themes/**
+    - /api/v1/login
+
+    - /v3/api-docs/**
+    - /swagger-ui.html
+    - /v3/api-docs.yaml
+    - /swagger-ui/**
+  authenticated-paths:
+    - /dashboard
+

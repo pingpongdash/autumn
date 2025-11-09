@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Autumn - Login</title>
+    <link rel="stylesheet" th:href="@{/css/style.css(theme=${currentTheme})}">
+</head>
+<body>
+    <h1>Autumn Portal</h1>
+
+    <h2>Login</h2>
+
+    <form id="login-form">
+        <div>
+            <label for="loginId">loginid:</label>
+            <input type="text" id="loginId" name="loginId" required>
+        </div>
+        <div>
+            <label for="password">password:</label>
+            <input type="password" id="password" name="password" required>
+        </div>
+        <button type="submit">Login</button>
+    </form>
+
+    <a th:href="@{/(theme='light')}">To light</a>
+    <a th:href="@{/(theme='dark')}">To dark</a>
+
+
+<p id="login-message"></p>
+
+<script>
+    document.getElementById("login-form").addEventListener("submit", async (event) => {
+        event.preventDefault();
+
+        const formData = new FormData(event.target);
+        const loginId = formData.get("loginId");
+        const password = formData.get("password");
+
+        try {
+            const response = await fetch("/api/v1/login", {
+                method: "POST",
+                headers: { "Content-Type": "application/x-www-form-urlencoded" },
+                body: `loginId=${encodeURIComponent(loginId)}&password=${encodeURIComponent(password)}`
+            });
+
+            if (!response.ok) {
+                document.getElementById("login-message").textContent = "Login failed.";
+                return;
+            }
+
+            const result = await response.json();
+            const token = result.token;
+
+            if (token) {
+                sessionStorage.setItem("authToken", token);
+                document.getElementById("login-message").textContent = "Login sucseed redirecteing....";
+
+                const dashResponse = await fetch("/dashboard", {
+                    headers: { "Authorization": `Bearer ${token}` }
+                });
+
+                if (dashResponse.ok) {
+                    const html = await dashResponse.text();
+                    document.open();
+                    document.write(html);
+                    document.close();
+                } else {
+                    document.getElementById("login-message").textContent = "Authenticate failed.: HTTP " + dashResponse.status + ")";
+                }
+            } else {
+                document.getElementById("login-message").textContent = "Coudn't get token.";
+            }
+        } catch (error) {
+            document.getElementById("login-message").textContent = "error!" + error.message;
+        }
+    });
+</script>
+</body>
+</html>
+
+
+
+<!--
+<!DOCTYPE html>
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" th:href="@{/css/style.css(theme=${currentTheme})}">
+    <title>Autumn - HTML Interface</title>
+</head>
+<body>
+    <h1>Autumn</h1>
+
+    <h2>login</h2>
+
+
+    <form th:action="@{/api/v1/login}" method="post">
+        <div>
+            <label for="loginId">loginid:</label>
+            <input type="text" id="loginId" name="loginId" required>
+        </div>
+        <div>
+            <label for="password">password:</label>
+            <input type="password" id="password" name="password" required>
+        </div>
+        <button type="submit">login</button>
+    </form>
+
+
+    <H3>The Code of HAL</H3>
+    <ol>
+        <li><strong>Be Honest</strong>: Follow my own will and curiosity first, before others.</li>
+        <li><strong>Be Brave</strong>: Confront my own ignorance, fear, and darkness. If Article 1 leads to wrongdoing, confront my own will.</li>
+        <li><strong>Be Calm</strong>: By following Articles 1 and 2, knowledge and skills will grow. Knowledge removes threats, allowing me to remain calm.</li>
+    </ol>
+
+    <a th:href="@{/(theme='light')}">To light</a>
+    <a th:href="@{/(theme='dark')}">To dark</a>
+
+    <p>Your IP address: <strong th:text="${clientIp}">shows ip address</strong></p>
+
+</body>
+</html> -->
