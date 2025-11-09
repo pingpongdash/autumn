@@ -13,14 +13,6 @@ import jp.kernelpanic.autumn.appbase.config.ComponentScanConfig;
 import jp.kernelpanic.autumn.appbase.config.ComponentScanProperties;
 import jp.kernelpanic.auth.core.config.SecurityConfig;
 
-// @ConfigurationPropertiesScan("jp.kernelpanic.autumn.appbase.config")
-// @Import({
-//     jp.kernelpanic.autumn.appbase.config.ComponentScanConfig.class,
-//     jp.kernelpanic.auth.core.config.SecurityConfig.class})
-// @ComponentScan(basePackages = {
-//     "jp.kernelpanic.autumn",
-//     "jp.kernelpanic.auth.core"
-// })
 @SpringBootApplication
 @Import(ComponentScanConfig.class)
 public class AutumnBase {

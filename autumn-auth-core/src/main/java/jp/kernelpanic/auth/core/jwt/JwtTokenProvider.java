@@ -27,8 +27,6 @@ public class JwtTokenProvider {
 
     private final long EXPIRATION_TIME = 3600000;
 
-
-    // application.ymlから鍵ファイルのパスを取得する
     public JwtTokenProvider(ResourceLoader resourceLoader,
         @Value("${jwt.secret.resource}") String secretKeyPath) {
 

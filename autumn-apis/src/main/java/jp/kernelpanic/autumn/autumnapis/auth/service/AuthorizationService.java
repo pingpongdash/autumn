@@ -29,9 +29,6 @@ public class AuthorizationService {
     // TODO use database
     private final AuthProperties authProperties;
 
-    // @Value("${auth.users}")
-    // private List<Map<String, String>> userList;
-
     private final Map<String, String> credentials = new HashMap<>();
 
     public AuthorizationService(JwtTokenProvider tokenProvider, AuthProperties authProperties) {
